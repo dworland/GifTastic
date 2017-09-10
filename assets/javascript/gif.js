@@ -7,7 +7,7 @@ $(document).ready(function() {
 	$("button").on("click", function() {
 
 		var movie = $(this).attr("data-name");
-		var queryURL = "http://api.giphy.com/v1/gifs/search?q=" + movie + "&api_key=a9ce13a440414be398837a2d69dfbba5&limit=10";
+		var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + movie + "&api_key=a9ce13a440414be398837a2d69dfbba5&limit=10";
 
 		$.ajax({
 	      url: queryURL,
@@ -19,6 +19,7 @@ $(document).ready(function() {
 			var results = response.data;
 
 			for (var i = 0; i < results.length; i++) {
+
 				var rating = results[i].rating;
 
           		var gifDiv = $("<div class=gifs>");
@@ -26,7 +27,10 @@ $(document).ready(function() {
           		var p = $("<p>").text("Rating: " + rating);
 
           		var movieImage = $("<img>");
-          		movieImage.attr("src", results[i].images.fixed_height.url);
+          		movieImage.addClass("Play");
+          		movieImage.data("gifData", results[i]);
+          		movieImage.attr("src", results[i].images.fixed_height_still.url);
+          		console.log(movieImage);
 
           		gifDiv.append(p);
           		gifDiv.append(movieImage);
@@ -38,20 +42,33 @@ $(document).ready(function() {
 	});
 
 	
-	$("img").on("click", function() {
+	$(document).on("click", ".Play", function() {
 
-		var state = $(this).attr("data-state");
-		var still = results[i].images.fixed_height_still.url;
-		var animate = results[i].images.fixed_height.url;
+		var imgData = $("img").data();
+		console.log(imgData);
 
-		if (state === "still") {
-			$(this).attr(animate);
-			$(this).attr("data-state", "animate");
+		var state = $("img").attr("src");
+		console.log(state);
+
+		var still = imgData.gifData.images.fixed_height_still.url;
+		console.log(still);
+
+		var animate = imgData.gifData.images.fixed_height.url;
+		console.log(animate);
+
+ 		if (state === still) {
+			console.log("animate");
+			$(this).attr("src", animate);
+			console.log(state);
+			$(this).attr("gifData", animate);
 		} else {
-	        $(this).attr(still);
-	        $(this).attr("data-state", "still");
+			console.log("still");
+			$(this).attr("src", still);
+			console.log(state);
+			$(this).attr("gifData", still);
 		}
-	})
+
+	});
 
 
 	function renderButtons() {

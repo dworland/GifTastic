@@ -1,3 +1,7 @@
+body {
+	background-color: #c1c1c1;
+}
+
 .movie-buttons {
 	font-family: "Arial", "Helvetica Neue", Helvetica, sans-serif;
 	background-color: #4AAAA5;
@@ -52,4 +56,6 @@ img {
 	border-radius: 5px;
 	color: #4AAAA5;
 }
+
+
 
