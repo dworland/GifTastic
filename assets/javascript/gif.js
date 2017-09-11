@@ -2,9 +2,7 @@ $(document).ready(function() {
 
 	var disneyMovies = ["Frozen", "The Little Mermaid", "Aladdin", "Cinderella", "Sleeping Beauty", "Tangled", "The Fox and the Hound", "Pocahontas", "Snow White", "The Incredibles", "Moana", "Monsters Inc", "Up", "Brave"];
 
-	renderButtons();
-
-	$("button").on("click", function() {
+ 	function grabGifs() {
 
 		var movie = $(this).attr("data-name");
 		var queryURL = "https://api.giphy.com/v1/gifs/search?q=" + movie + "&api_key=a9ce13a440414be398837a2d69dfbba5&limit=10";
@@ -39,15 +37,15 @@ $(document).ready(function() {
 			}
 
 	    });
-	});
+	}
 
 	
-	$(document).on("click", ".Play", function() {
+	function animateGif() {
 
-		var imgData = $("img").data();
+		var imgData = $(this).data();
 		console.log(imgData);
 
-		var state = $("img").attr("src");
+		var state = $(this).attr("src");
 		console.log(state);
 
 		var still = imgData.gifData.images.fixed_height_still.url;
@@ -68,7 +66,7 @@ $(document).ready(function() {
 			$(this).attr("gifData", still);
 		}
 
-	});
+	}
 
 
 	function renderButtons() {
@@ -99,6 +97,11 @@ $(document).ready(function() {
 
         renderButtons();
       });
+
+  	renderButtons();
+
+  	$(document).on("click", ".movie-buttons", grabGifs);
+  	$(document).on("click", ".Play", animateGif);
 
 });
 
